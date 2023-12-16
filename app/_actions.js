@@ -1,9 +1,7 @@
-'use server'
+"use server";
 
-import { updateUser } from "./lib/mongo/users"
+import { updateUser } from "./lib/mongo/users";
 
-
-export async function updateName(name,email){
- await updateUser(email,{name})
-    
+export async function updateName(name, email) {
+	await updateUser(email, { name });
 }

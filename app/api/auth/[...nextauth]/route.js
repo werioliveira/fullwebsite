@@ -16,6 +16,13 @@ export const authOptions = {
                     image: profile.picture,
                     role: profile.role ?? 'user'
                 }
+            },
+            authorization: {
+              params: {
+                prompt: "consent",
+                access_type: "offline",
+                response_type: "code"
+              }
             }
         })
     ],
