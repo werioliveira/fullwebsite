@@ -87,7 +87,7 @@ const NewNav = () => {
 									<ul>
 										<li>
 											<h2 className="p-2 text-lg rounded-md">
-												{session.user?.name}
+												{session?.user?.name}
 											</h2>
 										</li>
 										<Link
