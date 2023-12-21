@@ -42,6 +42,18 @@ const ProductSchema = new mongoose.Schema(
 				},
 			],
 		},
+		categories: [
+			
+				{type: String}
+		],
+
+
+		inStock: {
+			type: Boolean
+		},
+		quantity: {
+			type: Number
+		}
 		/*
 		extraOptions: {
 			type: [

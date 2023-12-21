@@ -56,15 +56,3 @@ export async function updateUser(email, update){
         return {error: 'failed to update user'}
     }
 }
-export async function updateWishList(userId, productId){
-  try{
-    if(!users) await init()
-    
-    await users.updateOne({userId: userId}, {$set: [productId]})
-    
-    return {success: true}
-
-}catch(error){
-    return {error: 'failed to update wishlist'}
-}
-}
