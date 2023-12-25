@@ -38,10 +38,17 @@ function Products({ product }) {
       inStock: product.inStock,
       categories: product.categories,
     });
-    toast.success("Wish List", {
-      description: `${product.title} added to wish list`,
-      duration: 2000,
-    });
+    const { wishItems } = JSON.parse(localStorage.getItem("wishList") || []);
+
+    wishItems.some((element) => element._id === product._id)
+      ? toast.success("Wish List", {
+          description: `${product.title} added to wish list`,
+          duration: 2000,
+        })
+      : toast.success("Wish List", {
+          description: `${product.title} removed to wish list`,
+          duration: 2000,
+        });
   };
   return (
     <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">

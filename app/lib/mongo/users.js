@@ -56,3 +56,29 @@ export async function updateUser(email, update){
         return {error: 'failed to update user'}
     }
 }
+export async function updateWishList(email, update){
+  try{
+      if(!users) await init()
+      
+      //await users.updateOne({email: email}, {$set: update})
+      await users.updateOne({email: email}, {$set:{"wishlist": update}})
+      
+      return {success: true}
+
+  }catch(error){
+      return {error: 'failed to update wishlist'}
+  }
+}
+export async function updateCartList(email, update){
+  try{
+      if(!users) await init()
+      
+      //await users.updateOne({email: email}, {$set: update})
+      await users.updateOne({email: email}, {$set:{"cart": update}})
+      
+      return {success: true}
+
+  }catch(error){
+      return {error: 'failed to update cart'}
+  }
+}
