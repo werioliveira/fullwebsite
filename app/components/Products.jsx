@@ -99,7 +99,7 @@ function Products({ product }) {
       <div className="px-5 py-3">
         <Link href={`/product/${product._id}`}>
           <h3 className="text-gray-700 uppercase">{product.title}</h3>
-          <span className="text-gray-500 mt-2">$12</span>
+          <span className="text-gray-500 mt-2">R${product.price}</span>
         </Link>
       </div>
     </div>

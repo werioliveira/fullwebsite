@@ -14,6 +14,7 @@ export const authOptions = {
                     name: profile.name,
                     email: profile.email,
                     image: profile.picture,
+                    emailVerified: profile.email_verified,
                     role: profile.role ?? 'user'
                 }
             },
