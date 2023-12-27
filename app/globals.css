@@ -187,3 +187,14 @@
   color: #000;
   /*Set to match the Tailwind colour you want the active one to be */
 }
+.fade-anim img {
+  animation: fadeAnim 0.5s ease-out;
+}
+@keyframes fadeAnim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

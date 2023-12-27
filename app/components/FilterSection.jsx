@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 const colors = ["Red", "Green", "Blue", "Black", "Brown", "Pink"];
 const categories = ["Men Cloth", "Women Cloth", "sapato"];
-const sizes = ["S", "m", "L", "XL"];
+const sizes = ["S", "M", "L", "XL"];
 const sortOrder = ["Newest", "Price Low", "Price High"];
 
 const filterOptions = [
