@@ -1,11 +1,20 @@
 "use client";
 import { signIn } from "next-auth/react";
-import React from "react";
+import React, { useContext } from "react";
+import { useSession } from "next-auth/react";
+import CartContext from "@/context/CartContext";
+import { updateWish } from "../_actions";
 
 export function GoogleButton() {
-  const handleClick = () => {
+  const { data: session, status } = useSession();
+  const handleClick = async () => {
     signIn("google");
+    const wish = localStorage.getItem("wishList");
+    if (status === "autenticated") {
+      await updateWish(wish, session.user.email);
+    }
   };
+
   return (
     <>
       {" "}

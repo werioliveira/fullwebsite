@@ -57,10 +57,15 @@ const ProductSection = () => {
       paramsObj?.categories,
       true
     );
+    const hasSubCategories = isAvaliable(
+      product.subcategories,
+      paramsObj?.subcategories,
+      true
+    );
     const hasColors = isAvaliable(product.colors, paramsObj.colors);
     const hasSize = isAvaliable(product.sizes, paramsObj.sizes);
 
-    return hasSize && hasColors && hasCategories;
+    return hasSize && hasColors && hasCategories && hasSubCategories;
   });
 
   filteredProducts = filteredProducts.sort((p1, p2) => {

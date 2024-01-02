@@ -3,6 +3,7 @@ import CartContext from "@/context/CartContext";
 import Link from "next/link";
 import { useContext } from "react";
 import { Toaster, toast } from "sonner";
+import Price from "./Price";
 
 // Write a fetcher function to wrap the native fetch function and return the result of a call to the URL in JSON format
 function Products({ product }) {

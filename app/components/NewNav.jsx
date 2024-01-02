@@ -72,16 +72,25 @@ const NewNav = () => {
                   </span>
                 </button>
               </Link>
-              <button className="relative z-20">
-                <Image
-                  width={32}
-                  height={32}
-                  src="/user-128-48.png"
-                  ref={profileRef}
-                  onClick={() => setOpenProfile(!openProfile)}
-                  alt="profile"
-                />
-              </button>
+              {!session ? (
+                <Link href="/api/auth/signin">
+                  <button className="relative w-14 h-10 bg-black text-white rounded-md">
+                    SignIn
+                  </button>
+                </Link>
+              ) : (
+                <button className="relative z-20">
+                  <Image
+                    width={32}
+                    height={32}
+                    src="/user-128-48.png"
+                    ref={profileRef}
+                    onClick={() => setOpenProfile(!openProfile)}
+                    alt="profile"
+                  />
+                </button>
+              )}
+
               <div className="flex sm:hidden">
                 <button
                   onClick={() => setIsOpen(!isOpen)}

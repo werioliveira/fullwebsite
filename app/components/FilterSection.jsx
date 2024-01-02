@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 const colors = ["Red", "Green", "Blue", "Black", "Brown", "Pink"];
 const categories = ["Men Cloth", "Women Cloth", "sapato"];
+const subcategories = ["cano alto", "sapatenis"];
 const sizes = ["S", "M", "L", "XL"];
 const sortOrder = ["Newest", "Price Low", "Price High"];
 
@@ -17,6 +18,12 @@ const filterOptions = [
     id: "categories",
     title: "Categories",
     options: categories,
+    type: "checkbox",
+  },
+  {
+    id: "subcategories",
+    title: "Sub Categories",
+    options: subcategories,
     type: "checkbox",
   },
   {

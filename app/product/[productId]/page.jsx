@@ -1,7 +1,6 @@
 "use client";
-import WishButton from "@/app/components/WishButton";
+import Price from "@/app/components/Price";
 import CartContext from "@/context/CartContext";
-import { useSession } from "next-auth/react";
 import React, { useContext, useState } from "react";
 import { Toaster, toast } from "sonner";
 import useSWR from "swr";
@@ -16,38 +15,6 @@ const Page = ({ params }) => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR(`/api/products/${params.productId}`, fetcher);
   // Handle the error state
-
-  const { addItemToCart, addItemToWishList, wishList } =
-    useContext(CartContext);
-  const addToCartHandler = () => {
-    addItemToCart({
-      _id: data._id,
-      title: data.title,
-      description: data.description,
-      img: data.img,
-      price: data.price,
-      quantity: data.quantity,
-      colors: color,
-      sizes: size,
-    });
-    toast.success("Cart", {
-      description: `${data.title} added to cart`,
-      duration: 2000,
-    });
-  };
-
-  const addToWishListHandler = () => {
-    addItemToWishList({
-      _id: data._id,
-      title: data.title,
-      description: data.description,
-      img: data.img,
-      price: data.price,
-      quantity: data.quantity,
-      colors: color,
-      sizes: size,
-    });
-  };
 
   if (error)
     return (
@@ -196,94 +163,13 @@ const Page = ({ params }) => {
               </span>
             </div>
             <p className="leading-relaxed">{data.description}</p>
-            <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-              <div className="flex">
-                <span className="mr-3">Color</span>
-                {data.colors.map((color) => (
-                  <button
-                    onClick={() => setColor(color.text)}
-                    style={{ backgroundColor: color.text }}
-                    key={color._id}
-                    className="border-2 border-gray-300 ml-1 rounded-full w-6 h-6 focus:outline-none"
-                  ></button>
-                ))}
-              </div>
-              <div className="flex ml-6 items-center">
-                <span className="mr-3">Size</span>
-                <div className="relative">
-                  <select
-                    className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10"
-                    onChange={handleSize}
-                  >
-                    {data.sizes.map((size) => (
-                      <option key={size._id} value={size.text}>
-                        {size.text}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-4 h-4"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M6 9l6 6 6-6"></path>
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="flex">
-              <span className="title-font font-medium text-2xl text-gray-900">
-                {data.price} R$
-              </span>
-              <button
-                className="flex ml-auto text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded"
-                onClick={addToCartHandler}
-              >
-                Add to Cart
-              </button>
-
-              {wishList.wishItems.some(
-                (element) => element._id === params.productId
-              ) ? (
-                <button
-                  className="rounded-full w-10 h-10 bg-red-200 p-0 border-0 inline-flex items-center justify-center text-red-500 ml-4"
-                  onClick={addToWishListHandler}
-                >
-                  <svg
-                    fill="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                  </svg>
-                </button>
-              ) : (
-                <button
-                  className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-red-500 ml-4"
-                  onClick={addToWishListHandler}
-                >
-                  <svg
-                    fill="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                  </svg>
-                </button>
-              )}
-            </div>
+            <Price
+              price={data.price}
+              colors={data.colors}
+              sizes={data.sizes}
+              params={params}
+              data={data}
+            />
           </div>
         </div>
       </div>
