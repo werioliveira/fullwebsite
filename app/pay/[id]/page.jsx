@@ -16,7 +16,7 @@ const PayPage = ({ params }) => {
     const makeRequest = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/api/create-intent/${id}`,
+          `process.env.NEXT_PUBLIC_APP_BASE_URL/api/create-intent/${id}`,
           {
             method: "POST",
           }

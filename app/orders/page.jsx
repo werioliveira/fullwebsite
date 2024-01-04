@@ -95,7 +95,7 @@ const Page = () => {
                         {order.products.map((product) => (
                           <Link
                             href={
-                              "http://localhost:3000/product/" + product._id
+                              process.env.NEXT_PUBLIC_APP_BASE_URL+"/product/" + product._id
                             }
                             key={product._id}
                           >

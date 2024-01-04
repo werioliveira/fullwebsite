@@ -50,7 +50,7 @@ const Page = () => {
       router.push("/");
     } else {
       try {
-        const res = await fetch("http://localhost:3000/api/orders", {
+        const res = await fetch(process.env.NEXT_PUBLIC_APP_BASE_URL+"/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -266,7 +266,7 @@ const Page = () => {
                   actions.order.capture();
 
                   await fetch(
-                    `http://localhost:3000/api/confirm/${data.orderID}`,
+                    `process.env.NEXT_PUBLIC_APP_BASE_URL/api/confirm/${data.orderID}`,
                     {
                       method: "PUT",
                     }
@@ -275,7 +275,7 @@ const Page = () => {
                 }}
                 onCancel={async (data) => {
                   await fetch(
-                    `http://localhost:3000/api/orders/${data.orderID}`,
+                    `process.env.NEXT_PUBLIC_APP_BASE_URL/api/orders/${data.orderID}`,
                     {
                       method: "DELETE",
                     }
