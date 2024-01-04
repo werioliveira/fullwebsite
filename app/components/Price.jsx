@@ -21,7 +21,7 @@ const Price = ({ price, sizes, colors, params, data }) => {
       title: data.title,
       description: data.description,
       img: data.img,
-      price: total,
+      price: price + colors[selected].price + sizes[selectedSize].price,
       quantity: quantity,
       colors: colors[selected].text,
       sizes: sizes[selectedSize].text,
@@ -178,7 +178,7 @@ const Price = ({ price, sizes, colors, params, data }) => {
           Add to Cart
         </button>
 
-        {wishList.wishItems.some(
+        {wishList?.wishItems?.some(
           (element) => element._id === params.productId
         ) ? (
           <button

@@ -1,10 +1,15 @@
 "use client";
 import CartContext from "@/context/CartContext";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { Toaster, toast } from "sonner";
 
 const page = () => {
   const { cart, addItemToCart, deleteItemFromCart } = useContext(CartContext);
+  const { data: session } = useSession();
+  const router = useRouter();
   const increaseQuantity = (cartItem) => {
     const newQuantity = cartItem?.quantity + 1;
     const item = { ...cartItem, quantity: newQuantity };
@@ -40,8 +45,30 @@ const page = () => {
     (acc, item) => acc + item.quantity * item.price,
     0
   );
-  const checkout = async () => {
-    await fetch("http://localhost:3000/api/checkout", {
+  const checkout = async (id) => {
+    if (!session) {
+      router.push("/");
+    } else {
+      try {
+        const res = await fetch("http://localhost:3000/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            products: cart.cartItems,
+            email: session.user.email,
+            totalPrice: amount,
+            status: "Not paid",
+            order_id_paypal: id,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    /*
+    await fetch("http://localhost:3000/api/checkout1", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,6 +84,55 @@ const page = () => {
           window.location.href = response.url;
         }
       });
+      const res = await fetch("/api/checkout1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: cart.cartItems, amount }),
+      });
+      const order = await res.json();
+
+      return order.id;
+    }}
+    /*
+    if (!session) {
+      router.push("/");
+    } else {
+      try {
+        const res = await fetch("http://localhost:3000/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            products: cart.cartItems,
+            email: session.user.email,
+            totalPrice: amount,
+            status: "Not paid",
+            intent_id: "",
+          }),
+        });
+        const data = await res.json();
+        router.push(`/pay/${data._id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    /*
+
+
+    /*
+    await fetch("http://localhost:3000/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        products: cart.cartItems,
+        email: session.user.email,
+        totalPrice: amount,
+      }),
+    });
+    */
   };
 
   return (
@@ -153,19 +229,60 @@ const page = () => {
               <p className="text-gray-700">$4.99</p>
             </div>
             <hr className="my-4" />
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-2">
               <p className="text-lg font-bold">Total</p>
               <div className="">
                 <p className="mb-1 text-lg font-bold">{amount} R$</p>
                 <p className="text-sm text-gray-700">including VAT</p>
               </div>
             </div>
-            <button
+            {/* 
+                        <button
               className="mt-6 w-full rounded-md bg-pink-500 py-1.5 font-medium text-blue-50 hover:bg-pink-600"
               onClick={checkout}
             >
               Check out
             </button>
+            */}
+
+            <PayPalScriptProvider
+              options={{
+                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+                currency: "BRL",
+              }}
+            >
+              <PayPalButtons
+                style={{ color: "black" }}
+                createOrder={async () => {
+                  const res = await fetch("/api/checkout-paypal", {
+                    method: "POST",
+                    body: JSON.stringify({ items: cart.cartItems, amount }),
+                  });
+                  const order = await res.json();
+                  await checkout(order.id);
+                  return order.id;
+                }}
+                onApprove={async (data, actions) => {
+                  actions.order.capture();
+
+                  await fetch(
+                    `http://localhost:3000/api/confirm/${data.orderID}`,
+                    {
+                      method: "PUT",
+                    }
+                  );
+                  router.push("/orders");
+                }}
+                onCancel={async (data) => {
+                  await fetch(
+                    `http://localhost:3000/api/orders/${data.orderID}`,
+                    {
+                      method: "DELETE",
+                    }
+                  );
+                }}
+              />
+            </PayPalScriptProvider>
           </div>
         </div>
       ) : (
