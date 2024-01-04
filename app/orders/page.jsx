@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import useSWR from "swr";
-const page = () => {
+const Page = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -150,4 +150,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

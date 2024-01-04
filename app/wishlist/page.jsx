@@ -3,7 +3,7 @@ import CartContext from "@/context/CartContext";
 import React, { useContext } from "react";
 import { Toaster, toast } from "sonner";
 
-const page = () => {
+const Page = () => {
   const { wishList, deleteItemFromWishList } = useContext(CartContext);
 
   const handleDeleteItem = (id) => {
@@ -72,4 +72,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

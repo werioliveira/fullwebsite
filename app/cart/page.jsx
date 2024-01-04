@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { Toaster, toast } from "sonner";
 
-const page = () => {
+const Page = () => {
   const { cart, addItemToCart, deleteItemFromCart } = useContext(CartContext);
   const { data: session } = useSession();
   const router = useRouter();
@@ -292,4 +292,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
