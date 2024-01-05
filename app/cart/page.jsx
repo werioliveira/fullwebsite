@@ -163,13 +163,13 @@ const Page = () => {
                         <span className="text-gray-700 text-xs font-semibold">
                           Size{" "}
                         </span>
-                        {item?.sizes}
+                        {item?.sizes.toUpperCase()}
                       </p>
                       <p className="mt-1 text-xs text-gray-700  flex flex-col">
                         <span className="text-gray-700 text-xs font-semibold">
                           Color{" "}
                         </span>
-                        {item?.colors}
+                        {item?.colors.toUpperCase()}
                       </p>
                     </div>
                   </div>

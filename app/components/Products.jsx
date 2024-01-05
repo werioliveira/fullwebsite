@@ -16,8 +16,8 @@ function Products({ product }) {
       img: product.img,
       price: product.price + product.colors[0].price + product.sizes[0].price,
       quantity: 1,
-      colors: product.colors[0],
-      sizes: product.sizes[0],
+      colors: product.colors[0].text,
+      sizes: product.sizes[0].text,
       inStock: product.inStock,
       categories: product.categories,
     });
@@ -34,8 +34,8 @@ function Products({ product }) {
       img: product.img,
       price: product.price + product.colors[0].price + product.sizes[0].price,
       quantity: 1,
-      colors: product.colors[0],
-      sizes: product.sizes[0],
+      colors: product.colors[0].text,
+      sizes: product.sizes[0].text,
       inStock: product.inStock,
       categories: product.categories,
     });
