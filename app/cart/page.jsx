@@ -50,17 +50,20 @@ const Page = () => {
       router.push("/");
     } else {
       try {
-        const res = await fetch(process.env.NEXT_PUBLIC_APP_BASE_URL+"/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            products: cart.cartItems,
-            email: session.user.email,
-            totalPrice: amount,
-            status: "Not paid",
-            order_id_paypal: id,
-          }),
-        });
+        const res = await fetch(
+          process.env.NEXT_PUBLIC_APP_BASE_URL + "/api/orders",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              products: cart.cartItems,
+              email: session.user.email,
+              totalPrice: amount,
+              status: "Not paid",
+              order_id_paypal: id,
+            }),
+          }
+        );
         const data = await res.json();
         console.log(data);
       } catch (error) {
@@ -156,20 +159,20 @@ const Page = () => {
                 <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                   <div className="mt-5 sm:mt-0 ">
                     <h2 className="text-lg font-bold text-gray-900">
-                      {item.title}
+                      {item?.title}
                     </h2>
                     <div className="flex flex-col">
                       <p className="mt-1 text-xs text-gray-700 flex flex-col">
                         <span className="text-gray-700 text-xs font-semibold">
                           Size{" "}
                         </span>
-                        {item.sizes.toUpperCase()}
+                        {item?.sizes.toUpperCase()}
                       </p>
                       <p className="mt-1 text-xs text-gray-700  flex flex-col">
                         <span className="text-gray-700 text-xs font-semibold">
                           Color{" "}
                         </span>
-                        {item.colors.toUpperCase()}
+                        {item?.colors.toUpperCase()}
                       </p>
                     </div>
                   </div>
@@ -184,7 +187,7 @@ const Page = () => {
                       <input
                         className="h-8 w-8 border bg-white text-center text-xs outline-none"
                         type="number"
-                        value={item.quantity}
+                        value={item?.quantity}
                         readOnly
                       />
                       <span
@@ -195,7 +198,7 @@ const Page = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <p className="text-sm">{item.price} R$</p>
+                      <p className="text-sm">{item?.price} R$</p>
                       <button onClick={() => handleDeleteItem(item._id)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
