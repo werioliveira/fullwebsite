@@ -50,20 +50,17 @@ const Page = () => {
       router.push("/");
     } else {
       try {
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_APP_BASE_URL + "/api/orders",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              products: cart.cartItems,
-              email: session.user.email,
-              totalPrice: amount,
-              status: "Not paid",
-              order_id_paypal: id,
-            }),
-          }
-        );
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            products: cart.cartItems,
+            email: session.user.email,
+            totalPrice: amount,
+            status: "Not paid",
+            order_id_paypal: id,
+          }),
+        });
         const data = await res.json();
         console.log(data);
       } catch (error) {
@@ -268,21 +265,15 @@ const Page = () => {
                 onApprove={async (data, actions) => {
                   actions.order.capture();
 
-                  await fetch(
-                    `process.env.NEXT_PUBLIC_APP_BASE_URL/api/confirm/${data.orderID}`,
-                    {
-                      method: "PUT",
-                    }
-                  );
+                  await fetch(`/api/confirm/${data.orderID}`, {
+                    method: "PUT",
+                  });
                   router.push("/orders");
                 }}
                 onCancel={async (data) => {
-                  await fetch(
-                    `process.env.NEXT_PUBLIC_APP_BASE_URL/api/orders/${data.orderID}`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
+                  await fetch(`/api/orders/${data.orderID}`, {
+                    method: "DELETE",
+                  });
                 }}
               />
             </PayPalScriptProvider>
