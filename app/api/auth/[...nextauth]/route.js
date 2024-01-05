@@ -120,6 +120,7 @@ export const authOptions = {
       */
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account, profile }) {
       return true;
@@ -192,6 +193,7 @@ export const authOptions = {
       return nanoid(32);
     },
   },
+
   adapter: MongoDBAdapter(clientPromise),
 };
 const handler = NextAuth(authOptions);
