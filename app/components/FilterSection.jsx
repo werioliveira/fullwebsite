@@ -1,7 +1,10 @@
+"use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import GetCategories from "./GetCategories";
 
 const colors = ["Red", "Green", "Blue", "Black", "Brown", "Pink"];
+
 const categories = ["Men Cloth", "Women Cloth", "sapato"];
 const subcategories = ["cano alto", "sapatenis"];
 const sizes = ["S", "M", "L", "XL"];
@@ -13,18 +16,6 @@ const filterOptions = [
     title: "Sorting Order",
     options: sortOrder,
     type: "radio",
-  },
-  {
-    id: "categories",
-    title: "Categories",
-    options: categories,
-    type: "checkbox",
-  },
-  {
-    id: "subcategories",
-    title: "Sub Categories",
-    options: subcategories,
-    type: "checkbox",
   },
   {
     id: "colors",
@@ -106,6 +97,10 @@ const FilterSection = () => {
   }
   return (
     <div className="col-span-2 space-y-6 sticky top-12 h-fit">
+      <GetCategories
+        isChecked={isChecked}
+        handleSelectedFilterOptions={handleSelectedFilterOptions}
+      />
       {filterOptions.map(({ id, title, type, options }) => {
         return (
           <div className="border-b pb-4" key={id}>

@@ -1,17 +1,8 @@
-"use client";
 import { Toaster } from "sonner";
-import Products from "./components/Products";
-import useSWR from "swr";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { updateWish } from "./_actions";
 import FilterSection from "./components/FilterSection";
 import ProductSection from "./components/ProductSection";
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [products, setProducts] = useState([]);
-
   /*
   useEffect(() => {
     async function handleSubmit() {
