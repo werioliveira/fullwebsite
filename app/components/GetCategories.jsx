@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 
 async function getCat() {
-  const res = await fetch(`http://localhost:3000/api/categories/`, {
-    method: "GET",
-  });
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_APP_BASE_URL + `/api/categories/`,
+    {
+      method: "GET",
+    }
+  );
   return await res.json();
 }
 async function getSubCategory() {
-  const res = await fetch(`http://localhost:3000/api/subcategories/`, {
-    method: "GET",
-  });
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_APP_BASE_URL + `/api/subcategories/`,
+    {
+      method: "GET",
+    }
+  );
   return await res.json();
 }
 
