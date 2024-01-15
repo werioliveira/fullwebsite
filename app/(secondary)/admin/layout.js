@@ -1,6 +1,15 @@
+import Sidebar from "@/app/components/Sidebar";
 import Carousel from "../../components/Carousel";
 import NewNav from "../../components/NewNav";
 
 export default function AdminLayout({ children }) {
-	return <div>{children}</div>;
+	return (
+		<>
+			<NewNav />
+			<div class="min-h-screen flex bg-gray-100">
+				<Sidebar />
+				<div className="w-full">{children}</div>
+			</div>
+		</>
+	);
 }
