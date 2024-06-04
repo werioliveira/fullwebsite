@@ -1,3 +1,4 @@
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import Categories from "@/app/models/Categories";
@@ -6,6 +7,7 @@ import { NextResponse } from "next/server";
 // FETCH ALL ORDERS
 export const GET = async (req) => {
   try {
+    
     const categories = await Categories.find();
     return new NextResponse(JSON.stringify(categories), { status: 200 });
   } catch (err) {

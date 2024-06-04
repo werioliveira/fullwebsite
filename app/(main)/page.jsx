@@ -2,7 +2,9 @@ import { Toaster } from "sonner";
 import FilterSection from "../components/FilterSection";
 import ProductSection from "../components/ProductSection";
 import { Suspense } from "react";
+import LoadingProducts from "./loading";
 import Loading from "../loading";
+
 
 const Home = () => {
 	/*
@@ -22,12 +24,16 @@ const Home = () => {
 		<div className="flex w-full justify-center">
 			<main className="flex min-h-screen items-center md:items-start p-2 md:flex-row flex-col w-[90%] justify-center">
 				<div className="flex mt-16 md:w-1/4 w-full items-center justify-center ">
-					<FilterSection />
+					<Suspense fallback={<Loading/>}>
+						<FilterSection />
+					</Suspense>
 				</div>
-				<div className="mt-16 w-3/4 mr-6">
-					<h3 className="text-gray-600 text-2xl font-medium">Fashions</h3>
-					<div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-6 mr-12">
-						<ProductSection />
+				<div className="mt-16 w-3/4 m-6 flex flex-col justify-center">
+					<h3 className="p-2 text-gray-600 text-2xl font-medium text-center md:text-left">Fashions</h3>
+					<div className="flex flex-col p-2">
+						<Suspense fallback={<LoadingProducts/>} >
+							<ProductSection />
+						</Suspense>
 						<Toaster
 							expand={false}
 							position="top-right"
@@ -35,6 +41,7 @@ const Home = () => {
 							closeButton
 						/>
 					</div>
+
 				</div>
 			</main>
 		</div>
