@@ -1,12 +1,10 @@
 "use client"
-import { StatusScreen, initMercadoPago } from '@mercadopago/sdk-react';
+import { initMercadoPago } from '@mercadopago/sdk-react';
 
 import { Payment } from '@mercadopago/sdk-react';
 import { useRouter } from 'next/navigation';
-
-import { useState } from 'react';
-
 const BricksMP = ({preferenceId, amount}) =>{
+  
     const router = useRouter();
     initMercadoPago(process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY,{locale: 'pt-BR'});
     const initialization = {
@@ -17,7 +15,6 @@ const BricksMP = ({preferenceId, amount}) =>{
         paymentMethods: {
           creditCard: "all",
           ticket: "all",
-          atm: "all",
           bankTransfer: "all",
         },
        };

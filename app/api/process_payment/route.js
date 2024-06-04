@@ -93,7 +93,6 @@ export const POST = async (req) => {
         try {
             const response = await preference.create({body: items})
             preferenceId = response.id
-            console.log(response);
             return NextResponse.json(preferenceId)
         } catch (error) {
             console.log(error);
@@ -152,7 +151,6 @@ export const POST = async (req) => {
         };
         const payout = await payment.create({body: payment_data}, requestOptions)
         //const pay = await payment.create({body: payment_data, requestOptions}).then(console.log).catch()
-        console.log(payout);
         //payment.create(payment_data).then(console.log).catch(console.log)
         
       return NextResponse.json(payout);

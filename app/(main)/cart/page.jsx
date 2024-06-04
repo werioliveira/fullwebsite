@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import dynamic from "next/dynamic";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card"
+import { initMercadoPago } from "@mercadopago/sdk-react";
 const BricksMP = dynamic(() => import("@/app/components/BricksMP"), {
   ssr: false,
 });
@@ -17,6 +18,7 @@ const Page = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false)
   const [preferenceId, setPreferenceId] = useState('')
+
   const router = useRouter();
   const increaseQuantity = (cartItem) => {
     const newQuantity = cartItem?.quantity + 1;
@@ -166,8 +168,15 @@ const Page = () => {
     closeButton
     />
     <div className="container max-w-5xl mx-auto px-4 md:px-6 py-12">
-      {isOpen ? <BricksMP preferenceId={preferenceId} amount={amount}/> : <></>}
-      {cart?.cartItems?.length > 0 ? (
+      {isOpen ? 
+      <>
+      <BricksMP preferenceId={preferenceId} amount={amount}/>
+      <button className="bg-pink-500 text-white px-4 py-2 rounded-lg" onClick={()=>setIsOpen(false)}>Voltar</button>
+      </>
+      
+      : (
+        <>
+  {cart?.cartItems?.length > 0 ? (
 
 <div className="grid md:grid-cols-[1fr_400px] gap-12">
   <div className="grid gap-8">
@@ -212,33 +221,37 @@ const Page = () => {
     <Separator />
   </div>
   <div className="grid gap-6">
-    <Card>
-      <CardHeader>
-        <CardTitle>Order Summary</CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="flex items-center justify-between">
-          <div className="font-medium">Subtotal</div>
-          <div className="font-medium">R${amount}</div>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="font-medium">Shipping</div>
-          <div className="font-medium">R${0}</div>
-        </div>
-        <Separator />
-        <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold">Total</div>
-          <div className="text-2xl font-bold">R${(amount)}</div>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full"  onClick={() => handlePreferenceId()}>Place Order</Button>
-      </CardFooter>
-    </Card>
+          <Card>
+          <CardHeader>
+            <CardTitle>Order Summary</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="flex items-center justify-between">
+              <div className="font-medium">Subtotal</div>
+              <div className="font-medium">R${amount}</div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="font-medium">Shipping</div>
+              <div className="font-medium">R${0}</div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div className="text-2xl font-bold">Total</div>
+              <div className="text-2xl font-bold">R${(amount)}</div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button className="w-full"  onClick={() => handlePreferenceId()}>Place Order</Button>
+          </CardFooter>
+        </Card>
+
   
   </div>
 </div>
 ): (<div> No Items in cart </div>)}
+        </>
+      )}
+
     </div>
     </>
   );
