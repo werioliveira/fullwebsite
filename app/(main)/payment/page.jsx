@@ -34,11 +34,14 @@ const SuccessPage = () => {
     
   };
   return (
+    <div className="container max-w-5xl mx-auto px-4 md:px-6 py-12 shadow-md my-2">
+
 <StatusScreen
    initialization={initialization}
    onReady={onReady}
    onError={onError}
 />
+   </div>
   );
 };
 
