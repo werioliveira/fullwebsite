@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export const GET = async (req) => {
 	let page = parseInt(req.nextUrl.searchParams.get("page"));
 	page = !page || page < 1 ? 1 : page;
-	const perPage = process.env.NEXT_PUBLIC_ORDERS_PER_PAGE;
+	const perPage = parseInt(process.env.NEXT_PUBLIC_ORDERS_PER_PAGE) || 10; // Adiciona um valor padrão
 
 	const session = await getServerSession(authOptions);
 

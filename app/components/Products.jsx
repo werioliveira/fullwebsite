@@ -2,8 +2,7 @@
 import CartContext from "@/context/CartContext";
 import Link from "next/link";
 import { useContext } from "react";
-import { Toaster, toast } from "sonner";
-import Price from "./Price";
+import { toast } from "sonner";
 
 // Write a fetcher function to wrap the native fetch function and return the result of a call to the URL in JSON format
 function Products({ product }) {
@@ -23,7 +22,7 @@ function Products({ product }) {
     });
     toast.success("Cart", {
       description: `${product.title} added to cart`,
-      duration: 2000,
+      duration: 1000,
     });
   };
   const addToWishListHandler = () => {
@@ -44,11 +43,11 @@ function Products({ product }) {
     wishItems.some((element) => element._id === product._id)
       ? toast.success("Wish List", {
           description: `${product.title} added to wish list`,
-          duration: 2000,
+          duration: 1000,
         })
       : toast.success("Wish List", {
           description: `${product.title} removed to wish list`,
-          duration: 2000,
+          duration: 500,
         });
   };
   return (
@@ -56,7 +55,7 @@ function Products({ product }) {
       <div
         className="flex items-end justify-end h-56 w-full bg-cover"
         style={{
-          backgroundImage: `url(https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144)`,
+          backgroundImage: `url(${product.img})`,
         }}
       >
         <button

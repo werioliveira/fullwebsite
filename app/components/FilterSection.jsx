@@ -5,9 +5,6 @@ import GetCategories from "./GetCategories";
 import Loading from "../loading";
 
 const colors = ["Red", "Green", "Blue", "Black", "Brown", "Pink"];
-
-const categories = ["Men Cloth", "Women Cloth", "sapato"];
-const subcategories = ["cano alto", "sapatenis"];
 const sizes = ["S", "M", "L", "XL"];
 const sortOrder = ["Newest", "Price Low", "Price High"];
 
@@ -98,12 +95,7 @@ const FilterSection = () => {
 	}
 	return (
 		<div className="col-span-2 space-y-6 sticky top-12 h-fit">
-			<Suspense fallback={<Loading />}>
-				<GetCategories
-					isChecked={isChecked}
-					handleSelectedFilterOptions={handleSelectedFilterOptions}
-				/>
-			</Suspense>
+				<GetCategories isChecked={isChecked} handleSelectedFilterOptions={handleSelectedFilterOptions}/>
 			{filterOptions.map(({ id, title, type, options }) => {
 				return (
 					<div

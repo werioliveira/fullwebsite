@@ -6,7 +6,7 @@ export default function AdminLayout({ children }) {
 	return (
 		<>
 			<NewNav />
-			<div class="min-h-screen flex bg-gray-100">
+			<div className="min-h-screen flex bg-gray-100">
 				<Sidebar />
 				<div className="w-full">{children}</div>
 			</div>
