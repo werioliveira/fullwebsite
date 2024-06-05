@@ -18,7 +18,7 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       default: "not paid",
     },
-    order_id_paypal: {
+    order_id_payment: {
       type: String,
     },
   },

@@ -14,6 +14,7 @@ export const GET = async (req) => {
 	if (session) {
 		try {
 			if (session.user.role == "admin") {
+				
 				const orders = await Order.find({})
 					.skip(perPage * (page - 1))
 					.limit(perPage);
@@ -51,7 +52,7 @@ export const POST = async (req) => {
 				totalPrice: body.totalPrice,
 				products: body.products,
 				status: body.status,
-				order_id_paypal: body.order_id_paypal,
+				order_id_payment: body.order_id_payment,
 			});
 			return new NextResponse(JSON.stringify(order), { status: 201 });
 		} catch (err) {

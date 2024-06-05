@@ -149,7 +149,7 @@ const ProductSection = () => {
 <div className="mt-2">
 <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center justify-center">
                   <span className="text-xs xs:text-sm text-gray-900">
-                  Showing {(page-1)*perPage} to {page*perPage} of {data.itemCount} Entries
+                  Showing {(page-1)*perPage + 1} to {page*perPage} of {data.itemCount} Entries
                   </span>
                   <div className="inline-flex mt-2 xs:mt-0">
                     &nbsp; &nbsp;

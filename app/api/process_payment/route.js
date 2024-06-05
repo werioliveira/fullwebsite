@@ -72,6 +72,7 @@ export const POST = async (req) => {
     const client = new MercadoPagoConfig({ accessToken: acessToken, options: {timeout: 5000, idempotencyKey: idempotencyKey} });
     const preference = new Preference(client);
     const isCreate = req.nextUrl.searchParams.get("confirm")
+    
     if(Boolean(isCreate) == false){
 
         let preferenceId = ''
@@ -136,6 +137,7 @@ export const POST = async (req) => {
                 installments: body.installments,
                 payment_method_id: body.payment_method_id,
                 issuer_id: body.issuer_id,
+                notification_url: 'https://webhook.site/a96a4ccf-8ea6-4eef-b17c-e6d4f87c1839',
                 payer: {
                   email: body.payer.email,
                   identification: {

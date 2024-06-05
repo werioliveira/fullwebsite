@@ -7,8 +7,7 @@ import { Toaster, toast } from "sonner";
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import dynamic from "next/dynamic";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card"
-import { initMercadoPago } from "@mercadopago/sdk-react";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 const BricksMP = dynamic(() => import("@/app/components/BricksMP"), {
   ssr: false,
 });
@@ -170,7 +169,7 @@ const Page = () => {
     <div className="container max-w-5xl mx-auto px-4 md:px-6 py-12">
       {isOpen ? 
       <>
-      <BricksMP preferenceId={preferenceId} amount={amount}/>
+      <BricksMP preferenceId={preferenceId} amount={amount} cart={cart.cartItems}/>
       <button className="bg-pink-500 text-white px-4 py-2 rounded-lg" onClick={()=>setIsOpen(false)}>Voltar</button>
       </>
       

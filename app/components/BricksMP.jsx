@@ -2,9 +2,10 @@
 import { initMercadoPago } from '@mercadopago/sdk-react';
 
 import { Payment } from '@mercadopago/sdk-react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-const BricksMP = ({preferenceId, amount}) =>{
-  
+const BricksMP = ({preferenceId, amount, cart}) =>{
+    const { data: session } = useSession();
     const router = useRouter();
     initMercadoPago(process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY,{locale: 'pt-BR'});
     const initialization = {
@@ -16,11 +17,13 @@ const BricksMP = ({preferenceId, amount}) =>{
           creditCard: "all",
           ticket: "all",
           bankTransfer: "all",
+          mercadoPago: "all",
         },
        };
        const onSubmit = async (
         { selectedPaymentMethod, formData }
        ) => {
+
         // callback chamado ao clicar no botão de submissão dos dados
         return new Promise((resolve, reject) => {
           fetch("/api/process_payment?confirm=true", {
@@ -32,9 +35,27 @@ const BricksMP = ({preferenceId, amount}) =>{
             
           })
             .then((response) => response.json())
-            .then((response) => {
-              router.push(`/payment?paymentId=${response.id}`)
+            .then(async(response) => {
+              
               // receber o resultado do pagamento
+              try {
+                const res = await fetch("/api/orders", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    products: cart,
+                    email: session.user.email,
+                    totalPrice: amount,
+                    status: response.status || 'Not Paid',
+                    order_id_payment: response.id,
+                  }),
+                });
+                const data = await res.json();
+                console.log(data);
+              } catch (error) {
+                console.log(error);
+              }
+              router.push(`/payment?paymentId=${response.id}`)
               resolve();
             })
             .catch((error) => {
