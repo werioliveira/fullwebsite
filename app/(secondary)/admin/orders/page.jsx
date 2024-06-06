@@ -16,6 +16,7 @@ const Page = ({ searchParams }) => {
 		['approved']: 'bg-green-200 text-green-900',
 		['rejected']: 'bg-red-200 text-red-900',
 		['pending']: 'bg-yellow-300 text-yellow-900',
+		['in_process']: 'bg-blue-300 text-blue-900'
 	}
 	if (status === "unauthenticated") {
 		router.push("/");
@@ -92,7 +93,7 @@ const Page = ({ searchParams }) => {
 	}
 	return (
 		<div>
-			<div className="bg-white p-8 rounded-md w-full">
+			<div className="bg-white p-8 rounded-md w-full ">
 				<div className=" flex items-center justify-between pb-6">
 					<div>
 						<h2 className="text-gray-600 font-semibold">Products Oder</h2>
