@@ -7,6 +7,7 @@ import { Toaster, toast } from "sonner";
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import Link from "next/link";
 
 
 const Page = () => {
@@ -180,7 +181,9 @@ const Page = () => {
               className="rounded-md object-cover"
             />
 <div>
+  <Link href={`/product/${item?._id}`}>
               <h3 className="font-medium">{item?.title}</h3>
+  </Link>
               <p className="text-gray-500 dark:text-gray-400">{item.description}</p>
               <div className="text-gray-500 dark:text-gray-400 text-sm">
                 Color: {item?.colors.toUpperCase()} | Size: {item?.sizes.toUpperCase()}
