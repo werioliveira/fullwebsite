@@ -6,17 +6,12 @@ import React, { useContext, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import dynamic from "next/dynamic";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
-const BricksMP = dynamic(() => import("@/app/components/BricksMP"), {
-  ssr: false,
-});
+
 
 const Page = () => {
   const { cart, addItemToCart, deleteItemFromCart } = useContext(CartContext);
   const { data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false)
-  const [preferenceId, setPreferenceId] = useState('')
 
   const router = useRouter();
   const increaseQuantity = (cartItem) => {
@@ -55,7 +50,7 @@ const Page = () => {
     0
   );
   const handlePreferenceId=async() =>{
-    setIsOpen(true)
+    
     const res = await fetch("/api/process_payment", {
       method: "POST",
       headers: {
@@ -64,8 +59,7 @@ const Page = () => {
       body: JSON.stringify({cart}),
     });
     const pref = await res.json();
-    setPreferenceId(pref)
-    //router.push(`/payment?preferenceId=${pref}`)
+    router.push(`/compra?preferenceId=${pref}`)
   }
   const checkout = async (id) => {
     if (!session) {
@@ -167,14 +161,8 @@ const Page = () => {
     closeButton
     />
     <div className="container max-w-5xl mx-auto px-4 md:px-6 py-12">
-      {isOpen ? 
-      <>
-      <BricksMP preferenceId={preferenceId} amount={amount} cart={cart.cartItems}/>
-      <button className="bg-pink-500 text-white px-4 py-2 rounded-lg" onClick={()=>setIsOpen(false)}>Voltar</button>
-      </>
-      
-      : (
-        <>
+
+
   {cart?.cartItems?.length > 0 ? (
 
 <div className="grid md:grid-cols-[1fr_400px] gap-12">
@@ -248,53 +236,11 @@ const Page = () => {
   </div>
 </div>
 ): (<div> No Items in cart </div>)}
-        </>
-      )}
 
     </div>
     </>
   );
 };
-function CreditCardIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="14" x="2" y="5" rx="2" />
-      <line x1="2" x2="22" y1="10" y2="10" />
-    </svg>
-  )
-}
-
-
-function DollarSignIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" x2="12" y1="2" y2="22" />
-      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-    </svg>
-  )
-}
 
 
 function MinusIcon(props) {
@@ -359,25 +305,4 @@ function TrashIcon(props) {
   )
 }
 
-
-function WalletCardsIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="18" height="18" x="3" y="3" rx="2" />
-      <path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2" />
-      <path d="M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21" />
-    </svg>
-  )
-}
 export default Page;

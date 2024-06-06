@@ -12,7 +12,11 @@ const Page = ({ searchParams }) => {
 
 	const { data: session, status } = useSession();
 	const router = useRouter();
-
+	const orderStatus = {
+		['approved']: 'bg-green-200 text-green-900',
+		['rejected']: 'bg-red-200 text-red-900',
+		['pending']: 'bg-yellow-300 text-yellow-900',
+	}
 	if (status === "unauthenticated") {
 		router.push("/");
 	}
@@ -131,14 +135,14 @@ const Page = ({ searchParams }) => {
 												</div>
 											</td>
 											<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-												{order.products.map((product) => (
+												{order.products.map((product,index) => (
 													<Link
 														href={
 															process.env.NEXT_PUBLIC_APP_BASE_URL +
 															"/product/" +
 															product._id
 														}
-														key={product._id}>
+														key={index}>
 														<p className="text-gray-900 whitespace-no-wrap">
 															{product.title}
 														</p>
@@ -156,10 +160,10 @@ const Page = ({ searchParams }) => {
 												</p>
 											</td>
 											<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-												<span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+												<span className={"relative inline-block px-3 py-1 font-semibold leading-tight rounded-full" + orderStatus[order.status]} >
 													<span
 														aria-hidden
-														className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+														className={"absolute inset-0 opacity-50 rounded-full " + orderStatus[order.status]}></span>
 													<span className="relative">{order.status}</span>
 												</span>
 											</td>
@@ -170,7 +174,7 @@ const Page = ({ searchParams }) => {
 
 							<div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
 								<span className="text-xs xs:text-sm text-gray-900">
-								Showing {(page-1)*perPage} to {page*perPage} of {data.itemCount} Entries
+								Showing {(page-1)*perPage +1} to {page*perPage} of {data.itemCount} Entries
 								</span>
 								<div className="inline-flex mt-2 xs:mt-0">
 									&nbsp; &nbsp;

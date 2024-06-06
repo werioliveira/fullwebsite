@@ -78,7 +78,6 @@ export const POST = async (req) => {
         let preferenceId = ''
         
         const {cart} = await req.json();
-    
         const items = {
             "items": 
             cart.cartItems.map((key)=>({
@@ -92,7 +91,7 @@ export const POST = async (req) => {
     // Cria um objeto de preferência
     
         try {
-            const response = await preference.create({body: items})
+            const response = await preference.create({body: items })
             preferenceId = response.id
             return NextResponse.json(preferenceId)
         } catch (error) {
