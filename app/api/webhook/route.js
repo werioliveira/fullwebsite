@@ -1,3 +1,4 @@
+import Order from "@/app/models/Order";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
@@ -14,8 +15,17 @@ export const POST = async (req) => {
         }
       })
       if(response.ok){
-        const data = await response.json()
-        console.log(data);
+        //const data = await response.json()
+        const {status, status_detail, id} = response.json()
+        try {
+          await Order.findOneAndUpdate({order_id_payment: id}, status)
+
+        } catch (error) {
+          return new NextResponse(
+            JSON.stringify({ data }),
+            { status: 500 }
+          );
+        }
         return new NextResponse(
           JSON.stringify({ data }),
           { status: 200 }
