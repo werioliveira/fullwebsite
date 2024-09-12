@@ -4,6 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 const acessToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
 
 export const POST = async (req) => {
+    const creditCardsTypes = {
+        master: 'mastercard',
+        visa: 'visa',
+        hipercard: 'hipercard',
+        elo: 'elo',
+        amex: 'amex',
+      };
     const idempotencyKey = uuidv4()
     const client = new MercadoPagoConfig({ accessToken: acessToken, options: {timeout: 5000, idempotencyKey: idempotencyKey} });
     const preference = new Preference(client);
@@ -49,11 +56,12 @@ export const POST = async (req) => {
         if(body.payment_method_id == 'boleto'){
             payment_data = {
                 token: body.token,
-                description: "teste",
+                description: "payment for wstore",
                 transaction_amount: parseFloat(body.transaction_amount),
                 installments: body.installments,
                 payment_method_id: body.payment_method_id,
                 issuer_id: body.issuer_id,
+                notification_url: process.env.MERCADOPAGO_NOTIFICATION_URL,
                 payer: {
                     first_name: body.payer.first_name,
                     last_name: body.payer.last_name,
@@ -65,10 +73,10 @@ export const POST = async (req) => {
                 }
             }
         } 
-            else if (body.payment_method_id == 'master' || body.payment_method_id == 'visa'){
+        else if (creditCardsTypes.hasOwnProperty(body.payment_method_id)) {
             payment_data = {
                 token: body.token,
-                description: "teste",
+                description: "payment for wstore",
                 transaction_amount: parseFloat(body.transaction_amount),
                 installments: body.installments,
                 payment_method_id: body.payment_method_id,
@@ -82,8 +90,9 @@ export const POST = async (req) => {
                   }
                 }
             }
-        }
-
+          } else {
+            console.log('Método de pagamento não reconhecido.');
+          }
 
 
         const paymentResponse = await payment.create({body: payment_data})
