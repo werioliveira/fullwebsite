@@ -16,7 +16,7 @@ export const POST = async (req) => {
       })
       if(response.ok){
         //const data = await response.json()
-        const {status, status_detail, id} = response.json()
+        const {status, status_detail, id} = await response.json()
         try {
           const orderUpdated = await Order.findOneAndUpdate({order_id_payment: id}, status)
           return new NextResponse(
