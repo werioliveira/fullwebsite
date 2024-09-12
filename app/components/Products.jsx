@@ -7,9 +7,10 @@ import { toast } from "sonner";
 // Write a fetcher function to wrap the native fetch function and return the result of a call to the URL in JSON format
 function Products({ product }) {
   const { addItemToCart, addItemToWishList } = useContext(CartContext);
+
   const allPrices = product.colors.map((color) => {
     return product.sizes.map((size) => {
-      return product.priceBase + color.price + size.price;
+      return product.price + color.price + size.price;
     });
   });
   
