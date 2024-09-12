@@ -65,7 +65,7 @@ export const POST = async (req) => {
                 }
             }
         } 
-            else if (body.payment_method_id == 'master'){
+            else if (body.payment_method_id == 'master' || body.payment_method_id == 'visa'){
             payment_data = {
                 token: body.token,
                 description: "teste",
@@ -83,6 +83,7 @@ export const POST = async (req) => {
                 }
             }
         }
+
 
 
         const paymentResponse = await payment.create({body: payment_data})
