@@ -1,7 +1,7 @@
 import Order from "@/app/models/Order";
 import { NextResponse } from "next/server";
 import { headers } from 'next/headers'
-import * as crypto from "crypto";
+import crypto from "crypto"
 
 export const POST = async (req) => {
   const {data} = await req.json()
@@ -31,15 +31,11 @@ export const POST = async (req) => {
   const dataID = paymentId
   // Generate the manifest string
   const manifest = `id:${dataID};request-id:${xRequestId};ts:${ts};`;
-  
-  // Create an HMAC signature
-  const hmac = crypto.createHmac('sha256', secret);
-  hmac.update(manifest);
-  
-  // Obtain the hash result as a hexadecimal string
-  const sha = hmac.digest('hex');
 
-  if (sha != hash) {
+  const hmac = crypto.createHmac('sha256', secret)
+  .update(manifest) // Atualiza com os dados
+  .digest('hex'); // Codifica em formato hexadecimal
+  if (hmac != hash) {
     return new NextResponse(
       JSON.stringify({ error: 'Not authorized by mercado-pago api' }),
       { status: 500 }
