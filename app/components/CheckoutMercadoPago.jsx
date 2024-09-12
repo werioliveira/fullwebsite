@@ -19,6 +19,7 @@ const CheckoutMercadoPago = ({preferenceId, amount, cart, email}) => {
       debitCard: "all",
       mercadoPago: "all",
     },
+    installments: 12
   };
   const onSubmit = async ({ selectedPaymentMethod, formData }) => {
    
