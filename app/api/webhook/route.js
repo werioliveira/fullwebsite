@@ -1,4 +1,5 @@
 import Order from "@/app/models/Order";
+import { CloudCog } from "lucide-react";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
@@ -14,11 +15,11 @@ export const POST = async (req) => {
           'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
         }
       })
+      
       if(response.ok){
-        //const data = await response.json()
         const {status, status_detail, id} = await response.json()
         try {
-          const orderUpdated = await Order.findOneAndUpdate({order_id_payment: id}, status)
+          const orderUpdated = await Order.findOneAndUpdate({order_id_payment: id}, {status: status})
           return new NextResponse(
             JSON.stringify({ orderUpdated }),
             { status: 200 }
