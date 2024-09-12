@@ -7,6 +7,17 @@ import { toast } from "sonner";
 // Write a fetcher function to wrap the native fetch function and return the result of a call to the URL in JSON format
 function Products({ product }) {
   const { addItemToCart, addItemToWishList } = useContext(CartContext);
+  const allPrices = product.colors.map((color) => {
+    return product.sizes.map((size) => {
+      return product.priceBase + color.price + size.price;
+    });
+  });
+  
+  // Flatten o array de arrays para obter todos os preços em um único array
+  const flattenedPrices = [].concat(...allPrices);
+  
+  // Encontra o menor preço
+  const lowestPrice = Math.min(...flattenedPrices);
   const addToCartHandler = () => {
     addItemToCart({
       _id: product._id,
@@ -99,7 +110,7 @@ function Products({ product }) {
       <div className="px-5 py-3">
         <Link href={`/product/${product._id}`}>
           <h3 className="text-gray-700 uppercase">{product.title}</h3>
-          <span className="text-gray-500 mt-2">R${product.price}</span>
+          <span className="text-gray-500 mt-2">R${lowestPrice}</span>
         </Link>
       </div>
     </div>
