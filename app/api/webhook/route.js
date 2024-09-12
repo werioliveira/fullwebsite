@@ -18,18 +18,18 @@ export const POST = async (req) => {
         //const data = await response.json()
         const {status, status_detail, id} = response.json()
         try {
-          await Order.findOneAndUpdate({order_id_payment: id}, status)
-
+          const orderUpdated = await Order.findOneAndUpdate({order_id_payment: id}, status)
+          return new NextResponse(
+            JSON.stringify({ orderUpdated }),
+            { status: 200 }
+          );
         } catch (error) {
           return new NextResponse(
-            JSON.stringify({ data }),
+            JSON.stringify({ error }),
             { status: 500 }
           );
         }
-        return new NextResponse(
-          JSON.stringify({ data }),
-          { status: 200 }
-        );
+
       }
 
     } catch (error) {
